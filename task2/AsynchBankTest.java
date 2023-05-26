@@ -7,7 +7,7 @@ import java.util.concurrent.ForkJoinTask;
  */
 public class AsynchBankTest {
     public static final int NACCOUNTS = 1000;
-    public static final int INITIAL_BALANCE = NACCOUNTS * 100000;
+    public static final int INITIAL_BALANCE = NACCOUNTS * 10000;
     public static void main(String[] args) {
         Bank b = new Bank(NACCOUNTS, INITIAL_BALANCE);
 
@@ -35,18 +35,17 @@ public class AsynchBankTest {
 
         ///
 
-        ArrayList<TransferTask> tasks = new ArrayList<>();
-        //ForkJoinPool pool = new ForkJoinPool();
-        for (int i = 0; i < NACCOUNTS; i++){
-            tasks.add(new TransferTask(b, i, INITIAL_BALANCE));
-        }
-        long start = System.currentTimeMillis();
-        ForkJoinTask.invokeAll(tasks);
 
+        ForkJoinPool pool = new ForkJoinPool();
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < NACCOUNTS; i++){
+            TransferTask t = new TransferTask(b, i, INITIAL_BALANCE);
+            pool.invoke(t);
+        }
+
+        pool.shutdown();
         long end = System.currentTimeMillis();
         System.out.println("TIME: " + (end - start));
-        //pool.shutdown();
-
 
     }
 }
