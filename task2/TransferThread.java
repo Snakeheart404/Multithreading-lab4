@@ -2,7 +2,7 @@ class TransferThread extends Thread {
     private Bank bank;
     private int fromAccount;
     private int maxAmount;
-    private static final int REPS = 10000;
+    private static final int REPS = 100000;
     public TransferThread(Bank b, int from, int max){
         bank = b;
         fromAccount = from;

@@ -6,12 +6,12 @@ import java.util.concurrent.ForkJoinTask;
  author Cay Horstmann
  */
 public class AsynchBankTest {
-    public static final int NACCOUNTS = 1000;
-    public static final int INITIAL_BALANCE = NACCOUNTS * 10000;
+    public static final int NACCOUNTS = 500;
+    public static final int INITIAL_BALANCE = NACCOUNTS * 1000000;
     public static void main(String[] args) {
         Bank b = new Bank(NACCOUNTS, INITIAL_BALANCE);
 
-        ///old
+        //old
 //        ArrayList<TransferThread> threads = new ArrayList<>();
 //        for (int i = 0; i < NACCOUNTS; i++) {
 //            threads.add(new TransferThread(b, i, INITIAL_BALANCE));
@@ -31,7 +31,7 @@ public class AsynchBankTest {
 //        } catch (Exception e) {
 //            throw new RuntimeException(e);
 //        }
-
+//
 
         ///
 
@@ -43,7 +43,6 @@ public class AsynchBankTest {
             pool.invoke(t);
         }
 
-        pool.shutdown();
         long end = System.currentTimeMillis();
         System.out.println("TIME: " + (end - start));
 
